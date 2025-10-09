@@ -43,6 +43,13 @@ public class Main {
         };
 
 
+        Comparator<Student> studentComparator = (Student i, Student j) -> {
+            if (i.getMark() > j.getMark()) {
+                return 1;
+            } else {
+                return -1;
+            }
+        };
 
 
         List<String> list = new ArrayList<String>();
@@ -74,6 +81,22 @@ public class Main {
             System.out.println(s);
         }
 
+
+        System.out.println("=============== Comparing with Students Object ===============");
+        
+        List<Student> studentList = new ArrayList<>();
+        studentList.add(new Student("test1", 71, 27));
+        studentList.add(new Student("test2", 80, 21));
+        studentList.add(new Student("elango", 60, 24));
+
+
+
+        Collections.sort(studentList, studentComparator);
+
+
+        for (Student s : studentList) {
+            System.out.println(s.getName() + "; " + s.getAge() + "; " + s.getMark());
+        }
 
     }
 
