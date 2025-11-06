@@ -1,0 +1,27 @@
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <!-- JDBC -->
+    <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+    <property name="hibernate.connection.url">
+      jdbc:mysql://localhost:3306/testehrdb?useSSL=false&amp;allowPublicKeyRetrieval=true&amp;serverTimezone=UTC
+    </property>
+    <property name="hibernate.connection.username">root</property>
+    <property name="hibernate.connection.password">root!</property>
+
+    <!-- Dialect -->
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+
+    <!-- Auto schema management: 'update' creates missing tables/columns without dropping data -->
+    <property name="hibernate.hbm2ddl.auto">update</property>
+
+    <!-- Logging -->
+    <property name="show_sql">true</property>
+    <property name="format_sql">true</property>
+
+    <!-- Entity class -->
+    <mapping class="com.elango.ehr.Patient"/>
+  </session-factory>
+</hibernate-configuration>
