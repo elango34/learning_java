@@ -2,6 +2,7 @@ package com.elango.ehr;
 
 import jakarta.persistence.*;
 
+// If we give like this @Table(name="patients") then the table name is considered as this instead of the class name 
 @Entity
 @Table(name = "patients")
 public class Patient {
@@ -10,7 +11,8 @@ public class Patient {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 120)
+    // If we give like this @Table(name="full_name") then the column name is considered as this instead of the property name 
+    @Column(name = "full_name", nullable = false, length = 120)
     private String name;
 
     @Column(nullable = false)
@@ -18,6 +20,10 @@ public class Patient {
 
     @Column(nullable = false, length = 20)
     private String status;
+
+    // will be avoided in the table
+    @Transient
+    private String temp;
 
     public Patient() {}
 

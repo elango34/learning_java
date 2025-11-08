@@ -31,4 +31,6 @@ bin/
 
 # Java compiled files
 *.class
-**/*.class
+**/*.
+
+target/
