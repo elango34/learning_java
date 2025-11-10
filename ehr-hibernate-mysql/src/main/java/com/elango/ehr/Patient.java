@@ -1,5 +1,7 @@
 package com.elango.ehr;
 
+import java.util.List;
+
 import jakarta.persistence.*;
 
 // If we give like this @Table(name="patients") then the table name is considered as this instead of the class name 
@@ -25,12 +27,47 @@ public class Patient {
     @Transient
     private String temp;
 
+    private Address address;
+
+    @OneToMany(mappedBy = "patient")
+    private List<Appointment> appointments;
+
     public Patient() {}
 
-    public Patient(String name, int age, String status) {
+    public Patient( String name, int age, String status, Address address) {
         this.name = name;
         this.age = age;
         this.status = status;
+        this.address = address;
+    }
+
+
+    public String getTemp() {
+        return temp;
+    }
+
+
+    public void setTemp(String temp) {
+        this.temp = temp;
+    }
+
+
+    public List<Appointment> getAppointments() {
+        return appointments;
+    }
+
+
+    public void setAppointments(List<Appointment> appointments) {
+        this.appointments = appointments;
+    }
+
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     public Long getId() {
