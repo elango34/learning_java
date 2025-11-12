@@ -23,13 +23,12 @@ public class Appointment {
     private Patient patient;
 
 
-    public Appointment( String status, int duration, LocalDateTime scheduledAt) {
+    public Appointment( String status, int duration, LocalDateTime scheduledAt, Patient patient) {
         this.status = status;
         this.duration = duration;
         this.scheduledAt = scheduledAt;
+        this.patient = patient;
     }
-
-
 
     Appointment() {}
 
@@ -93,6 +92,12 @@ public class Appointment {
     public String toString() {
         return "Appointment [id=" + id + ", status=" + status + ", duration=" + duration + ", scheduledAt="
                 + scheduledAt + ", patient=" + patient + "]";
+    }
+
+
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     

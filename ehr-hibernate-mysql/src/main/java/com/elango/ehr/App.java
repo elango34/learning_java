@@ -15,28 +15,57 @@ import org.hibernate.cfg.Configuration;
 public class App {
     public static void main(String[] args) {
 
-        Address elangoAddress = new Address("test", "test", 612001, 789456123, "Elango");
-        Address rajAddress = new Address("test", "test", 612001, 789132123, "Raj");
+        // First create a patient, A patient can exist without any appointment or anything.
+        // But for the remaining object this is required.
+        Address johnAddress = new Address("test", "test", 612001, 789456123, "John");
+        Address ramAddress = new Address("test", "test", 612001, 789132123, "Raj");
+
+        // create patient object
+        Patient john = new Patient("john", 27, "fine", johnAddress);
+        Patient ram = new Patient("ram", 27, "not good", ramAddress);
 
 
-        Appointment elangoApointment = new Appointment("Check In", 120, LocalDateTime.now());
-        Appointment elangoApointment2 = new Appointment("Checked Out", 0, LocalDateTime.now());
+        // ============================ One to One Starts ===========================
 
-        Appointment rajApointment = new Appointment("Check In", 120, LocalDateTime.now());
+        /*
+         * Let's take medical record for this
+         * A patient can be linked to one medical record of his/her own.
+         * A medical record can be linked to one patient.
+         * On both sides it's linked to one, so it's a one to one
+        */
 
-        Patient elango = new Patient("elango", 27, "fine", elangoAddress);
-        Patient raj = new Patient("raj", 27, "not good", rajAddress);
+        // Create medical record object 
+        MedicalRecord johnMedicalRecord = new MedicalRecord("A+", "prawn", "allergy", "Cetrizine", "none", "123123123");
+        MedicalRecord ramMedicalRecord = new MedicalRecord("O+", "none", "none", "none", "none", "24123123123");
 
-        elango.setAppointments(Arrays.asList(elangoApointment, elangoApointment2));
-        raj.setAppointments(Arrays.asList(rajApointment));
+        // attach a patient to that
+        johnMedicalRecord.setPatient(john);
+        ramMedicalRecord.setPatient(ram);
 
-        elangoApointment.setPatient(elango);
-        elangoApointment2.setPatient(elango);
-        rajApointment.setPatient(raj);
 
+        // ============================ One to Many / May to One ===========================
+        /*
+        
+            * First create a patient, A patient can exist without any appointment.
+            * While creating appointment, it must belong to someone.
+            * So pass the patient object to the appointment as per the business flow
+        
+        */ 
+
+        // create appointment object with patient
+        Appointment johnApointment = new Appointment("Check In", 120, LocalDateTime.now(), john);
+        Appointment johnApointment2 = new Appointment("Checked Out", 0, LocalDateTime.now(), john);
+        Appointment ramApointment = new Appointment("Check In", 120, LocalDateTime.now(), ram);
+
+
+        // Once both object has been created then set the appointments to the patient object.
+        john.setAppointments(Arrays.asList(johnApointment, johnApointment2));
+        ram.setAppointments(Arrays.asList(ramApointment));
+        
         Configuration configuration = new Configuration();
         configuration.addAnnotatedClass(Patient.class)
-                     .addAnnotatedClass(Appointment.class);
+                     .addAnnotatedClass(Appointment.class)
+                     .addAnnotatedClass(MedicalRecord.class);
 
         configuration.configure("hibernate.cfg.xml");
 
@@ -53,11 +82,13 @@ public class App {
          */
         Transaction transaction1 = session.beginTransaction();
 
-        session.persist(elango);
-        session.persist(raj);
-        session.persist(elangoApointment);
-        session.persist(elangoApointment2);
-        session.persist(rajApointment);
+        session.persist(john);
+        session.persist(ram);
+        session.persist(johnApointment);
+        session.persist(johnApointment2);
+        session.persist(ramApointment);
+        session.persist(johnMedicalRecord);
+        session.persist(ramMedicalRecord);
 
         transaction1.commit();
 
@@ -128,6 +159,28 @@ public class App {
         // Step 6: Close resources
         session.close();
         sf.close();
+
+
+        // ============================ One to Many / May to One ENDS ===========================
+
+
+
+
+
+
+        // ============================ Many to Many ===========================
+
+
+        /*
+         * Let's take medication for this
+         * A patient can be linked to multiple medication.
+         * A medication can be linked to multiple patient.
+         * On both sides it's linked to many, so it's a many to many
+         */
+
+
+
+
 
     }
 }

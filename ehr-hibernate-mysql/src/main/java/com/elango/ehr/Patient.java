@@ -29,6 +29,9 @@ public class Patient {
 
     private Address address;
 
+    @OneToOne(mappedBy = "patient")
+    private MedicalRecord medicalRecord;
+
     @OneToMany(mappedBy = "patient")
     private List<Appointment> appointments;
 
@@ -102,5 +105,12 @@ public class Patient {
         this.status = status;
     }
 
+    public MedicalRecord getMedicalRecord() {
+        return medicalRecord;
+    }
+
+    public void setMedicalRecord(MedicalRecord medicalRecord) {
+        this.medicalRecord = medicalRecord;
+    }
     
 }
