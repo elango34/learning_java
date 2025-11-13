@@ -28,8 +28,7 @@ public class Provider {
 
 
     
-    public Provider(int id, String npi, String firstName, String lastName, String speciality, int phone) {
-        this.id = id;
+    public Provider( String npi, String firstName, String lastName, String speciality, int phone) {
         this.npi = npi;
         this.firstName = firstName;
         this.lastName = lastName;

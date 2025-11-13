@@ -29,11 +29,14 @@ public class Patient {
 
     private Address address;
 
-    @OneToOne(mappedBy = "patient")
-    private MedicalRecord medicalRecord;
-
     @OneToMany(mappedBy = "patient")
     private List<Appointment> appointments;
+
+    @ManyToMany
+    private List<Medication> medications;
+
+    @ManyToMany(mappedBy = "patients")
+    private List<Provider> providers;
 
     public Patient() {}
 
@@ -105,12 +108,23 @@ public class Patient {
         this.status = status;
     }
 
-    public MedicalRecord getMedicalRecord() {
-        return medicalRecord;
+    public List<Medication> getMedications() {
+        return medications;
     }
 
-    public void setMedicalRecord(MedicalRecord medicalRecord) {
-        this.medicalRecord = medicalRecord;
+    public void setMedications(List<Medication> medications) {
+        this.medications = medications;
     }
+
+    public List<Provider> getProviders() {
+        return providers;
+    }
+
+    public void setProviders(List<Provider> providers) {
+        this.providers = providers;
+    }
+
+    
+    
     
 }

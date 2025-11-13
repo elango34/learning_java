@@ -20,8 +20,7 @@ public class Medication {
     private String route;
 
 
-    public Medication(int id, String name, String strength, String form, String route) {
-        this.id = id;
+    public Medication( String name, String strength, String form, String route) {
         this.name = name;
         this.strength = strength;
         this.form = form;
